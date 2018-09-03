@@ -13,6 +13,9 @@ class User(db.Model, UserMixin):
      email = db.Column(db.String(120), unique=True,nullable=False)
      image_file = db.Column(db.String(20),nullable=False, default='default.jpg')
      password = db.Column(db.String(60), nullable=False)
+     city = db.Column(db.String(60))
+     age = db.Column(db.Integer)
+     education = db.Column(db.String(60))
      posts = db.relationship('Post', backref='author', lazy=True)
 
      def is_active(self):
