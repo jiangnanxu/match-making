@@ -3,7 +3,7 @@ import secrets
 
 from flask import render_template, url_for, flash, redirect, request
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, deleteUserForm
 from app.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -84,22 +84,19 @@ def logout():
 
 
 
-@app.route("/admin")
+@app.route("/admin",methods=['GET', 'POST'])
+@login_required
 def admin():
     posts = User.query.all()
-    return render_template('admin.html', title='Admin',posts=posts)
-
-
-@app.route("/admin/<int:id>/delete")
-@login_required
-def deleteuser(id):
-    
-    user=User.query.get_or_404(id)
-    db.session.delete(user)
-    db.session.commit()
-    flash('first user has been deleted!', 'success')
-    return redirect(url_for('home'))
-
+    form=deleteUserForm()
+    if form.validate_on_submit():
+       user=User.query.filter_by(username=form.username.data).first()
+       db.session.delete(user)
+       db.session.commit()
+       flash('selected user has been deleted!', 'success')
+       next_page = request.args.get('next')
+       return redirect(next_page) if next_page else redirect(url_for('admin'))
+    return render_template('admin.html', title='Admin',posts=posts,form=form)
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
