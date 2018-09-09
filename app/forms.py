@@ -1,22 +1,22 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
-from wtforms.validators import DataRequired, length, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, length, Email, EqualTo, ValidationError,number_range
 from app.models import User
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), length(min=2, max=20)])
+    username = StringField('Username', validators=[DataRequired(), length(min=2, max=10)])
     
     email = StringField('Email', validators=[DataRequired(), Email()])
     
-    password = PasswordField('Password', validators=[DataRequired(),])
+    password = PasswordField('Password', validators=[DataRequired(),length(min=3, max=10)])
   
     confirm_password = PasswordField('Confirm Password', 
                                      validators=[DataRequired(), EqualTo('password')])
 
-    city = StringField('City', validators=[DataRequired(), length(min=2, max=20)])
+    city = StringField('City', validators=[DataRequired(), length(min=2, max=10)])
     
-    age = IntegerField('Age')
+    age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
    
     education = StringField('Education', validators=[DataRequired()])
 
@@ -31,7 +31,7 @@ class RegistrationForm(FlaskForm):
          user=User.query.filter_by(email=email.data).first()
          if user:
             raise ValidationError('that email is taken. please try again')
-
+      
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
@@ -61,4 +61,8 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
+
+class deleteUserForm(FlaskForm):
+      username = StringField('enter username for delete')
+      submit = SubmitField('Delete')
     
