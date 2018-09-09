@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+ <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data- target="#deleteModal">Delete</button>
+  {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.username }}</a>
+              <small class="text-muted">{{ post.email }}</small>
+            </div>
+            <p class="article-content">{{ post.username }}</p>
+            <small class="text-muted">{{post.city}}</small>
+            <small class="text-muted">{{post.age}}</small>
+            <small class="text-muted">{{post.education}}</small>
+          </div>
+        </article>
+    {% endfor %}
+
+
+
+
+{% endblock content %}
