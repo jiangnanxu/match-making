@@ -103,7 +103,7 @@ def importuser():
 					tscore = tscore + 2
 			sm = float(tscore/6) + float(score/6)
 			fsm = "{:.0%}".format(sm/2)
-			result = Result(users.name, str(fsm), users.id)
+			result = Result(user.id, users.name, str(fsm), )
 			db.session.add(result)
 			db.session.commit()
 		else:
