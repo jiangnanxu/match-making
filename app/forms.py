@@ -67,4 +67,17 @@ class UpdateAccountForm(FlaskForm):
 class deleteUserForm(FlaskForm):
       username = StringField('enter username for delete')
       submit = SubmitField('Delete')
+
+
+
+class PreferencesForm(FlaskForm):
+    prefstate = SelectField('state preference', choices=[('same','same state'), ('all', 'any state')])
+    
+    prefage = SelectField('Age preference', choices=[('Be','older'),('El','younger'),('all','any')] )
+    
+    prefpersonality = SelectField('Personality preference', choices=[('ne','neutral'),('ex','extroverted'),('in','introverted')])
+   
+    prefeducation = SelectField('Education preference', choices=[('hs','highschool'),('td','tertiary degree'),('mp','master/phd')])
+    
+    submit = SubmitField('Update Preferences')
     

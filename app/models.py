@@ -18,6 +18,8 @@ class User(db.Model, UserMixin):
      gender = db.Column(db.String(8))
      education = db.Column(db.String(60))
      posts = db.relationship('Post', backref='author', lazy=True)
+     # Preference db relationship   
+     preferences = db.relationship('Preferences', backref='pref', lazy=True)
 
      def is_active(self):
         return True
@@ -33,3 +35,25 @@ class Post(db.Model):
     
     def __repr__(self):
         return f"Post('{self.title}','{self.date_posted}')"
+
+class results(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	uid = db.Column(db.Integer)
+	name = db.String(db.String(60))
+	score = db.String(db.String(60))
+	
+	def __repr__(self):
+            return f"results('{self.uid}','{self.name}','{self.score}')"
+
+    # Preference db 
+class Preferences(db.Model):
+    preferencesid = db.Column(db.Integer, primary_key=True)
+    prefage = db.Column(db.String(60))
+    prefstate = db.Column(db.String(60))
+    prefpersonality = db.Column(db.String(60))
+    prefeducation = db.Column(db.String(60))
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    
+    def __repr__(self):
+        return f"Preferences('{self.age}','{self.state}','{self.personality}','{self.education}')"

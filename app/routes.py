@@ -3,8 +3,8 @@ import secrets
 
 from flask import render_template, url_for, flash, redirect, request
 from app import app, db, bcrypt
-from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, deleteUserForm
-from app.models import User, Post
+from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, deleteUserForm, PreferencesForm
+from app.models import User, Post, Preferences
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -28,8 +28,9 @@ posts1 = [
 @app.route("/home")
 def home():
     
-    return render_template('home.html')
-
+    pref=Preferences.query.all()
+    return render_template('home.html',pref=pref)
+   
 
 @app.route("/about")
 def about():
@@ -116,5 +117,20 @@ def account():
         form.email.data = current_user.email
     
     return render_template('account.html', title='Account', form=form)
+
+@app.route("/preferences", methods=['GET', 'POST'])
+@login_required
+def preferences():
+    form = PreferencesForm()
+    if form.validate_on_submit():
+        
+        preferences = Preferences(prefage=form.prefage.data, prefstate=form.prefstate.data, prefpersonality=form.prefpersonality.data,        prefeducation=form.prefeducation.data, user_id=current_user.id)
+        
+        db.session.add(preferences)
+        db.session.commit()
+        
+        flash('Your preference has been created! You are now able to match', 'success')
+        return redirect(url_for('login'))
+    return render_template('preferences.html', title='preferences', form=form)
     
       
