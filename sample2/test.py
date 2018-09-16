@@ -9,8 +9,9 @@ app = Flask(__name__)
 
 @app.route('/display')
 def display():
-	Session = sessionmaker(bind=engine) 
-	results = Session.query(Result).all()
+	Session = sessionmaker(bind=engine)
+	s = Session()
+	results = s.query(Result).all()
 	return render_template('show.html', results = results)
 
 @app.route('/')
@@ -84,7 +85,7 @@ def importuser():
 			s.commit()
 		else:
 			return "Object not found"
-	return render_template('show.html')
+	return display()
 	
 	
 			
