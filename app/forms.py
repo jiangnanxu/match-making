@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField, RadioField
 from wtforms.validators import DataRequired, length, Email, EqualTo, ValidationError,number_range
 from app.models import User
 
@@ -14,9 +14,11 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', 
                                      validators=[DataRequired(), EqualTo('password')])
 
-    city = StringField('City', validators=[DataRequired(), length(min=2, max=10)])
+    state = SelectField('state',choices=[('Vic','victoria'),('Nsw','new south wales'),('Wa','western Australia'),('QSL','queensland'),('Sa','south australia'),('Tas','Tasmina')])
     
     age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
+     
+    gender = SelectField('gender', choices=[('M','Male'),('F','Female')])
    
     education = StringField('Education', validators=[DataRequired()])
 

@@ -35,6 +35,9 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+@app.route("/profile")
+def profile():
+    return render_template('profile.html',title='profile')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -43,7 +46,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password, city=form.city.data, age=form.age.data,         education=form.education.data)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, state=form.state.data, age=form.age.data, gender=form.gender.data, education=form.education.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
