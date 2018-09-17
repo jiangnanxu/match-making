@@ -2,29 +2,32 @@ from __future__ import division
 from flask import Flask
 from flask import Flask, flash, redirect, render_template, request, session, abort
 from sqlalchemy.orm import sessionmaker
-from table import *
+from models import *
 engine = create_engine('sqlite:///site.db', echo=True)
 
 app = Flask(__name__)
 
 @app.route('/display')
 def display():
-	return render_template('show.html', results = results.query.all())
+	Session = sessionmaker(bind=engine)
+	s = Session()
+	results = s.query(Result).all()
+	return render_template('show.html', results = results)
 
 @app.route('/')
 def main():
 	return render_template('new.html')
 
-@app.route('/input', methods=['GET', 'POST'])
-def importuser():
-	Result.query.delete()
-	fs = User.query.filter_by(current_user.username)
+@app.route('/match', methods=['GET', 'POST'])
+def match():
+	user = request.form['username']
+	fs=User.query.filter_by(username=user)
 	out = fs.first()
-	fo = Preferences.query.filter_by(current_user.username)
+	fo = Preferences.query.filter_by(user_id=out.id)
 	per = fo.first()
-	result = User.query.filter_by(User.gender != out.gender).all()
+	result = User.query.filter_by(gender != out.gender).all()
 	for users in result:
-		tout = Preferences.query.filter_by(Preferences.name == users.name)
+		tout = Preferences.query.filter(Preferences.user_id == users.id)
 		tper = tout.first()
 		if tper:
 			score = 0
@@ -49,7 +52,7 @@ def importuser():
 			if(per.prefpersonality=="neutral"):
 				if(users.personality=="neutral"):
 					score = score + 2
-				else
+				else:
 					score = score + 1
 			if(per.perfcity=="Same"):
 				if(users.city==out.city):
@@ -62,9 +65,8 @@ def importuser():
 				if(users.education==out.education) or (users.income=="Tertiary Degree"):
 					score = score + 2
 			if(per.perfeducation=="Master/Phd"):
-				if(users.education==out.education)
+				if(users.education==out.education):
 					score = score + 2
-			tscore = 0
 			if(tper.perfage=="All"):
 				tscore = tscore + 2
 			if(tper.perfage=="EL"):
@@ -91,7 +93,7 @@ def importuser():
 			if(tper.prefpersonality=="neutral"):
 				if(users.personality=="neutral"):
 					score = score + 2
-				else
+				else:
 					score = score + 1
 			if(tper.perfeduction=="High School Graduate"):
 				tscore = tscore + 2
@@ -99,17 +101,20 @@ def importuser():
 				if(users.education==out.education) or (out.education=="Master/Phd"):
 					tscore = tscore + 2
 			if(tper.perfeducation=="Master/Phd"):
-				if(users.education==out.education)
+				if(users.education==out.education):
 					tscore = tscore + 2
 			sm = float(tscore/6) + float(score/6)
 			fsm = "{:.0%}".format(sm/2)
-			result = Result(user.id, users.name, str(fsm), )
+			result = Result(users.id, users.name, str(fsm))
 			db.session.add(result)
 			db.session.commit()
 		else:
 			return "Object not found"
 	return redirect(url_for('display'))
-	
+
+@app.route('/display')
+def display():
+	return render_template('show.html', results = results.query.all())
 	
 			
 

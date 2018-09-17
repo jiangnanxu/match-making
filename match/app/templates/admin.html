@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+  
+    <form method="POST" action="">
+	{{ form.hidden_tag() }}
+	<fieldset class="form-group">
+	<div class="form-group">
+	 {{ form.username.label(class="form-control-label") }}
+	 {{form.username(class="form-control form-control-lg")}}
+	 </div>
+	 </fieldset>
+	 <div class="form-group">
+                {{form.submit(class="btn btn-outline-info")}}
+             </div>
+    </form>
+	 {% for post in posts %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.username }}</a>
+              <small class="text-muted">{{ post.email }}</small>
+            </div>
+            <p class="article-content">{{ post.username }}</p>
+            <small class="text-muted">{{post.city}}</small>
+            <small class="text-muted">{{post.age}}</small>
+            <small class="text-muted">{{post.education}}</small>
+          </div>
+        </article>
+    {% endfor %}
+
+
+
+
+{% endblock content %}
