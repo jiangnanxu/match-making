@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
      
     gender = SelectField('gender', choices=[('M','Male'),('F','Female')])
    
-    education = StringField('Education', validators=[DataRequired()])
+    education = SelectField('Education', choices=[('highschool','highschool'),('tertiary','tertiary degree'),('master','master/phd')])
 
     submit = SubmitField('Sign Up')
     
@@ -63,6 +63,7 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
+
 
 class deleteUserForm(FlaskForm):
       username = StringField('enter username for delete')

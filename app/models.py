@@ -53,7 +53,9 @@ class Preferences(db.Model):
     prefpersonality = db.Column(db.String(60))
     prefeducation = db.Column(db.String(60))
     
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    username = db.Column(db.String, db.ForeignKey('user.username'))
     
+    def is_active(self):
+        return True
     def __repr__(self):
-        return f"Preferences('{self.age}','{self.state}','{self.personality}','{self.education}')"
+        return f"Preferences('{self.prefage}','{self.prefstate}','{self.prefpersonality}','{self.prefeducation}')"

@@ -28,9 +28,14 @@ posts1 = [
 @app.route("/home")
 def home():
     
-    pref=Preferences.query.all()
-    return render_template('home.html',pref=pref)
+    
+    return render_template('homepage.html',title='home')
    
+@app.route("/display")
+def display():
+    prefs=Preferences.query.all()
+
+    return render_template('display.html',title='display', prefs=prefs)
 
 @app.route("/about")
 def about():
@@ -43,7 +48,7 @@ def profile():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('account'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -58,7 +63,7 @@ def register():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('account'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -92,14 +97,14 @@ def logout():
 @login_required
 def admin():
     posts = User.query.all()
-    form=deleteUserForm()
+    form= deleteUserForm()
     if form.validate_on_submit():
        user=User.query.filter_by(username=form.username.data).first()
        db.session.delete(user)
        db.session.commit()
        flash('selected user has been deleted!', 'success')
        next_page = request.args.get('next')
-       return redirect(next_page) if next_page else redirect(url_for('admin'))
+       return  redirect(url_for('admin'))
     return render_template('admin.html', title='Admin',posts=posts,form=form)
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -124,13 +129,14 @@ def preferences():
     form = PreferencesForm()
     if form.validate_on_submit():
         
-        preferences = Preferences(prefage=form.prefage.data, prefstate=form.prefstate.data, prefpersonality=form.prefpersonality.data,        prefeducation=form.prefeducation.data, user_id=current_user.id)
+        preferences = Preferences(prefage=form.prefage.data, prefstate=form.prefstate.data, prefpersonality=form.prefpersonality.data,        prefeducation=form.prefeducation.data, username=current_user.username)
         
         db.session.add(preferences)
         db.session.commit()
         
         flash('Your preference has been created! You are now able to match', 'success')
-        return redirect(url_for('login'))
+        next_page = request.args.get('next')
+        return  redirect(next_page) if next_page else redirect(url_for('display'))
     return render_template('preferences.html', title='preferences', form=form)
     
       

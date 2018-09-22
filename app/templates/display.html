@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+ {% for prefs in prefs %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+			  <p>prefer age </p>
+              <a class="mr-2" href="#">{{ prefs.prefage }}</a>
+			  <p> prefer state </p>
+              <small class="text-muted">{{ prefs.prefstate }}</small>
+            </div>
+			<p>prefer personality </p>
+            <p class="article-content">{{ prefs.prefpersonality }}</p>
+            <p> prefer education</p>
+            <small class="text-muted">{{prefs.prefeducation }}</small>
+			<p> username :</p>
+			<small class="text-muted">{{prefs.username}}</small>
+           
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}
