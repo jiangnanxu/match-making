@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+{% for prefs in prefs %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class+"mr-2" href="#">{{ prefs.prefage }}</a>
+            <small class="text-muted">{{ prefs.prefstate }}</small>
+        </div>
+        <p class="article-content"> {{ prefs.prefpersonality }}</p>
+                                 
+        <small class="text-muted">{{ prefs.prefeducation }}</small>
+        <small class="text-muted">{{ prefs.username }}</small>
+        
+    </div>
+</article>
+{% endfor %}
+
+
+
+
+{% endblock content %}

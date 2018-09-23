@@ -13,12 +13,13 @@ class User(db.Model, UserMixin):
      email = db.Column(db.String(120), unique=True,nullable=False)
      image_file = db.Column(db.String(20),nullable=False, default='default.jpg')
      password = db.Column(db.String(60), nullable=False)
-     city = db.Column(db.String(60))
+     state = db.Column(db.String(60))
      age = db.Column(db.Integer)
+     personality = db.Column(db.String(60))
+     gender = db.Column(db.String(8))
      education = db.Column(db.String(60))
      posts = db.relationship('Post', backref='author', lazy=True)
-
-# Preference db relationship   
+     # Preference db relationship   
      preferences = db.relationship('Preferences', backref='pref', lazy=True)
 
      def is_active(self):
@@ -36,15 +37,26 @@ class Post(db.Model):
     def __repr__(self):
         return f"Post('{self.title}','{self.date_posted}')"
 
+class results(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	uid = db.Column(db.Integer)
+	name = db.String(db.String(60))
+	score = db.String(db.String(60))
+	
+	def __repr__(self):
+            return f"results('{self.uid}','{self.name}','{self.score}')"
+
     # Preference db 
 class Preferences(db.Model):
     preferencesid = db.Column(db.Integer, primary_key=True)
-    prefage = db.Column(db.Integer)
-    prefcity = db.Column(db.String(60))
+    prefage = db.Column(db.String(60))
+    prefstate = db.Column(db.String(60))
     prefpersonality = db.Column(db.String(60))
     prefeducation = db.Column(db.String(60))
     
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    username = db.Column(db.String, db.ForeignKey('user.username'), nullable=False)
     
+    def is_active(self):
+        return True
     def __repr__(self):
-        return f"User('{self.age}','{self.city}','{self.personality}','{self.education}')"
+        return f"Preferences('{self.prefage}','{self.prefstate}','{self.prefpersonality}','{self.prefeducation}')"

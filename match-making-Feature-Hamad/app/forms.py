@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField, RadioField, SelectMultipleField, widgets
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, length, Email, EqualTo, ValidationError,number_range
 from app.models import User
 
@@ -14,11 +15,13 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', 
                                      validators=[DataRequired(), EqualTo('password')])
 
-    city = StringField('City', validators=[DataRequired(), length(min=2, max=10)])
+    state = SelectField('State', choices=[('vic','VIC'), ('nsw', 'NSW'),('qsl','QSL'), ('sa', 'SA'), ('tas', 'TAS')])
     
     age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
-    
-    education = StringField('Education', validators=[DataRequired()])
+     
+    gender = SelectField('Gender', choices=[('M','Male'),('F','Female')])
+   
+    education = SelectField('Education', choices=[('HS','Highschool'),('TD','Tertiary'),('UN','Undergrade'),('MD','Masters'),('PhD','PhD')])
 
     submit = SubmitField('Sign Up')
     
@@ -47,14 +50,17 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    city = StringField('City', validators=[DataRequired(), length(min=2, max=10)])
     
     age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
     
-    personality = StringField('Personality', validators=[DataRequired()])
-   
-    education = StringField('Education', validators=[DataRequired()])	
+    state = SelectField('State', choices=[('vic','VIC'), ('nsw', 'NSW'),('qsl','QSL'), ('sa', 'SA'), ('tas', 'TAS')])
     
+    personality = SelectField('Personality', choices=[('E','Extroverted'), ('I','Introverted') , ('N','No preference')])
+   
+    education = SelectField('Education', choices=[('HS','Highschool'),('TD','Tertiary'),('UN','Undergrade'),('MD','Masters'),('PhD','PhD')])
+    
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+
     submit = SubmitField('Update')
 
     def validate_username(self, username):
@@ -68,20 +74,22 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
-
-class PreferencesForm(FlaskForm):
-    prefcity = StringField('City preference', validators=[DataRequired(), length(min=2, max=10)])
-    
-    prefage = IntegerField('Age preference', validators=[DataRequired(), number_range(min=18, max=99)])
-    
-    prefpersonality = StringField('Personality preference', validators=[DataRequired()])
-   
-    prefeducation = StringField('Education preference', validators=[DataRequired()])
-    
-    submit = SubmitField('Update Preferences')
-    
+                
 
 class deleteUserForm(FlaskForm):
       username = StringField('enter username for delete')
       submit = SubmitField('Delete')
+
+
+
+class PreferencesForm(FlaskForm):
     
+    prefage = SelectField('Age preference', choices=[('old','Older'),('young','Younger'), ('same age','Same age'), ('No pref','No preference')] )
+    
+    prefstate = SelectField('State preference', choices=[('Local','Local'), ('No pref', 'No preference')])
+    
+    prefpersonality = SelectField('Personality preference', choices=[('E','Extroverted'), ('I','Introverted') , ('N','No preference')])
+   
+    prefeducation = SelectField('Education preference', choices=[('HS','Highschool'),('TD','Tertiary'),('UN','Undergrade'),('MD','Masters'),('PhD','PhD')])
+    
+    submit = SubmitField('Update Preferences')

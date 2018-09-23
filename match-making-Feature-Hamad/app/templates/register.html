@@ -33,41 +33,8 @@
                   {{form.email(class="form-control form-control-lg")}}
                  {% endif %}
              </div>
-               <div class="form-group">
-                {{form.password.label(class="form-control-label")}}
-
-                 {% if form.password.errors %}
-                  {{ form.password(class="form-control form-control-lg is-invalid")}}
-                  <div class="invalid-feedback">
-                     {% for error in form.password.errors %}
-                        <span>{{ error }}</span>
-                     {% endfor %}
-                  </div> 
-                 {% else %}
-                  {{form.password(class="form-control form-control-lg")}}
-                 {% endif %}
-             </div>
-             <div class="form-group">
-                {{form.confirm_password.label(class="form-control-label")}}
-                
-                 {% if form.confirm_password.errors %}
-                  {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
-                  <div class="invalid-feedback">
-                     {% for error in form.confirm_password.errors %}
-                        <span>{{ error }}</span>
-                     {% endfor %}
-                  </div> 
-                 {% else %}
-                  {{form.confirm_password(class="form-control form-control-lg")}}
-                 {% endif %}
-             </div>
-         
-             <div class="form-group">
-                {{form.city.label(class="form-control-label")}}
-                {{form.city(class="form-control form-control-lg")}}
-             </div>
-             
-             <div class="form-group">
+              
+              <div class="form-group">
 			    {{form.age.label(class="form-control-label")}}
                 
                  {% if form.age.errors %}
@@ -82,12 +49,53 @@
                  {% endif %}
                 
              </div>
+              
+              <div class="form-group">
+			    {{form.gender.label(class="form-control-label")}} <br>
+                {{form.gender(class="form-control form-control-lg")}}
+             </div>
+              
              <div class="form-group">
-                {{form.education.label(class="form-control-label")}}
+                 
+                {{form.state.label(class="form-control-label")}} <br>
+                {{form.state(class="form-control form-control-lg")}}
+             </div>
+            
+             <div class="form-group">
+                {{form.education.label(class="form-control-label")}} <br>
                 {{form.education(class="form-control form-control-lg")}}
              </div>
+              
+              <div class="form-group">
+                {{form.password.label(class="form-control-label")}}
+
+                 {% if form.password.errors %}
+                  {{ form.password(class="form-control form-control-lg is-invalid")}}
+                  <div class="invalid-feedback">
+                     {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                     {% endfor %}
+                  </div> 
+                 {% else %}
+                  {{form.password(class="form-control form-control-lg")}}
+                 {% endif %}
+             </div>
              
-             
+              <div class="form-group">
+                {{form.confirm_password.label(class="form-control-label")}}
+                
+                 {% if form.confirm_password.errors %}
+                  {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
+                  <div class="invalid-feedback">
+                     {% for error in form.confirm_password.errors %}
+                        <span>{{ error }}</span>
+                     {% endfor %}
+                  </div> 
+                 {% else %}
+                  {{form.confirm_password(class="form-control form-control-lg")}}
+                 {% endif %}
+             </div>
+         
             
              <div class="form-group">
                 {{form.submit(class="btn btn-outline-info")}}
