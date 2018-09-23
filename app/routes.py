@@ -1,10 +1,11 @@
 import os
 import secrets
 
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, session
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, deleteUserForm, PreferencesForm
-from app.models import User, Post, Preferences
+from app.models import User, Post, Preferences, results
+from sqlalchemy.orm import sessionmaker
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -36,6 +37,10 @@ def display():
     prefs=Preferences.query.all()
 
     return render_template('display.html',title='display', prefs=prefs)
+@app.route('/display2')
+def display2():
+       res = results.query.all()
+       return render_template('result.html', title='result', res=res)
 
 @app.route("/about")
 def about():
@@ -138,5 +143,110 @@ def preferences():
         next_page = request.args.get('next')
         return  redirect(next_page) if next_page else redirect(url_for('display'))
     return render_template('preferences.html', title='preferences', form=form)
-    
-      
+
+@app.route("/test",methods=['GET','POST'])
+def test():
+   
+   result1=results(uid=1,name='ammy',score='80%')
+   db.session.add(result1)
+   db.session.commit()
+   
+   flash('match result added to database')
+   return render_template('homepage.html',title='home')
+
+@app.route("/match", methods=['GET', 'POST'])
+def match():
+	results.query.delete()
+	fs = User.query.filter_by(username=current_user.username)
+	out = fs.first()
+	fo = Preferences.query.filter_by(username=current_user.username)
+	per = fo.first()
+	result = User.query.filter(User.gender != out.gender).all()
+	for users in result:
+		tout = Preferences.query.filter(Preferences.username == users.username)
+		tper = tout.first()
+		if tper:
+			score = 0
+			if(per.prefage=="all"):
+				score = score + 2
+			if(per.prefage=="El"):
+				if(users.age==out.age)or(out.age > users.age):
+					score = score + 2
+			if(per.prefage=="Be"):
+				if(users.age==out.age)or(out.age < users.age):
+					score = score + 2
+			if(per.prefpersonality=="in"):
+				if(users.personality=="introverted"):
+					score = score + 2
+				if(users.personality=="ne"):
+					score = score + 1
+			if(per.prefpersonality=="ex"):
+				if(users.personality=="extroverted"):
+					score = score + 2
+				if(users.personality=="ne"):
+					score = score + 1
+			if(per.prefpersonality=="ne"):
+				if(users.personality=="neutral"):
+					score = score + 2
+				else:
+					score = score + 1
+			if(per.prefstate=="same"):
+				if(users.state==out.state):
+					score = score + 2
+			
+			if(per.prefeducation=="any"):
+				score = score + 2
+			if(per.prefeducation=="Tertiary Degree"):
+				if(users.education==out.education) or (users.income=="Tertiary Degree"):
+					score = score + 2
+			if(per.prefeducation=="Master/Phd"):
+				if(users.education==out.education):
+					score = score + 2
+			tscore = 0
+			if(tper.prefage=="all"):
+				tscore = tscore + 2
+			if(tper.prefage=="El"):
+				if(users.age==out.age)or(users.age > out.age):
+					tscore = tscore + 2
+			if(tper.prefage=="Be"):
+				if(users.age==out.age)or(users.age < out.age):
+					tscore = tscore + 2
+			if(tper.prefstate=="same"):
+				if(users.state==out.state):
+					tscore = tscore + 2
+			if(tper.prefstate=="all"):
+				tscore = tscore + 2
+			if(tper.prefpersonality=="introverted"):
+				if(out.personality=="introverted"):
+					tscore = tscore + 2
+				if(out.personality=="neutral"):
+					tscore = tscore + 1
+			if(tper.prefpersonality=="extroverted"):
+				if(out.personality=="extroverted"):
+					tscore = tscore + 2
+				if(out.personality=="neutral"):
+					tscore = tscore + 1
+			if(tper.prefpersonality=="neutral"):
+				if(users.personality=="neutral"):
+					tscore = tscore + 2
+				else:
+					tscore = tscore + 1
+			if(tper.prefeducation=="any"):
+				tscore = tscore + 2
+			if(tper.prefeducation=="Tertiary Degree"):
+				if(users.education==out.education) or (out.education=="Master/Phd"):
+					tscore = tscore + 2
+			if(tper.prefeducation=="Master/Phd"):
+				if(users.education==out.education):
+					tscore = tscore + 2
+			sm = float(tscore/8) + float(score/8)
+			fsm = "{:.0%}".format(sm/2)
+			result = results(uid=users.id, name=users.username, score=str(fsm))
+			db.session.add(result)
+			db.session.commit()
+		else:
+			return "Object not found"
+	return render_template('match.html',title='match', result=result)
+	
+	
+	     

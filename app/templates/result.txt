@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+
+ {% for res in res %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+			
+              <a class="mr-2" href="#">{{ res.uid }}</a>
+			
+              <small class="text-muted">{{ res.name }}</small>
+            </div>
+			
+            <p class="article-content">{{ res.score }}</p>
+            
+          </div>
+        </article>
+    {% endfor %}
+
+{% endblock content %}

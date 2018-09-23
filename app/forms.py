@@ -20,7 +20,9 @@ class RegistrationForm(FlaskForm):
      
     gender = SelectField('gender', choices=[('M','Male'),('F','Female')])
    
-    education = SelectField('Education', choices=[('highschool','highschool'),('tertiary','tertiary degree'),('master','master/phd')])
+    education = SelectField('Education', choices=[('highschool','highschool'),('Tertiary Degree','Tertiary Degree'),('Master/Phd','master/phd')])
+    
+    personality = SelectField('personality', choices=[('neutral','neutral'),('extroverted','extroverted'),('introverted','introverted')])
 
     submit = SubmitField('Sign Up')
     
@@ -69,6 +71,10 @@ class deleteUserForm(FlaskForm):
       username = StringField('enter username for delete')
       submit = SubmitField('Delete')
 
+class addresult(FlaskForm):
+      uid=IntegerField('uid')
+      name=StringField('name')
+      score=StringField('score')
 
 
 class PreferencesForm(FlaskForm):
@@ -78,7 +84,7 @@ class PreferencesForm(FlaskForm):
     
     prefpersonality = SelectField('Personality preference', choices=[('ne','neutral'),('ex','extroverted'),('in','introverted')])
    
-    prefeducation = SelectField('Education preference', choices=[('hs','highschool'),('td','tertiary degree'),('mp','master/phd')])
+    prefeducation = SelectField('Education preference', choices=[('hs','highschool'),('td','Tertiary degree'),('master/phd','master/phd'),('any','any')])
     
     submit = SubmitField('Update Preferences')
     
