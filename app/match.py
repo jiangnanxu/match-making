@@ -101,7 +101,7 @@ def match():
 			if(tper.perfeducation=="Master/Phd"):
 				if(users.education==out.education):
 					tscore = tscore + 2
-			sm = float(tscore/6) + float(score/6)
+			sm = float(tscore/8) + float(score/8)
 			fsm = "{:.0%}".format(sm/2)
 			result = Result(user.id, users.name, str(fsm))
 			db.session.add(result)
