@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
      age = db.Column(db.Integer)
      gender = db.Column(db.String(8))
      education = db.Column(db.String(60))
+     personality = db.Column(db.String(60))
      posts = db.relationship('Post', backref='author', lazy=True)
      # Preference db relationship   
      preferences = db.relationship('Preferences', backref='pref', lazy=True)
@@ -39,8 +40,8 @@ class Post(db.Model):
 class results(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	uid = db.Column(db.Integer)
-	name = db.String(db.String(60))
-	score = db.String(db.String(60))
+	name = db.Column(db.String(60))
+	score = db.Column(db.String(60))
 	
 	def __repr__(self):
             return f"results('{self.uid}','{self.name}','{self.score}')"
