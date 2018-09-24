@@ -6,9 +6,22 @@
         <div class="media-body">
           <h2 class="account-heading">{{ current_user.username }}</h2>
           <p class="text-secondary">{{ current_user.email }}</p>
-		  <h3>match (<a href = "{{ url_for('match') }}">Matching
-         </a>)</h3> 
+		  
         </div>
       </div>
+	   {% for pref in prefs %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+            
+              <small class="text-muted">{{ pref.prefpersonality}}</small>
+            </div>
+            
+            <small class="text-muted">{{pref.prefstate}}</small>
+            <small class="text-muted">{{pref.prefage}}</small>
+            <small class="text-muted">{{pref.prefeducation}}</small>
+          </div>
+        </article>
+    {% endfor %}
     
 {% endblock content %}

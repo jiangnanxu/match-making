@@ -39,11 +39,48 @@
                         {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+                
+                <div class="form-group">
+                {{form.age.label(class="form-control-label")}}
+
+                {% if form.age.errors %}
+                {{ form.age(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.age.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.age(class="form-control form-control-lg")}}
+                {% endif %}
+
+            </div>
+            
+            <div class="form-group">
+                {{form.state.label(class="form-control-label")}}
+                {{form.state(class="form-control form-control-lg")}}
+            </div>
+
+            <div class="form-group">
+                {{form.personality.label(class="form-control-label")}}
+                {{form.personality(class="form-control form-control-lg")}}
+            </div>
+
+            
+            <div class="form-group">
+                {{form.education.label(class="form-control-label")}}
+                {{form.education(class="form-control form-control-lg")}}
+            </div>
+            
                
             </fieldset>
+            
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
+            
         </form>
     </div>
+	<h3>match <a href = "{{ url_for('match') }}" class="btn btn-outline-info">Matching
+         </a></h3>
 {% endblock content %}

@@ -7,6 +7,11 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 
@@ -28,16 +33,19 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
               <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+              <a class="nav-item nav-link" href="{{ url_for('profile') }}">Profile</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
-				<a class="nav-item nav-link" href="{{ url_for('preferences') }}">Preferences</a>
                 <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
                 <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+				<a class="nav-item nav-link" href="{{ url_for('preferences')}}">update preferences </a>
+				<a class="nav-item nav-link" href="{{ url_for('display')}}">display preferences </a>
               {% else %}
                 <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                 <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                <a class="nav-item nav-link">Update Profile</a>
               {% endif %}
             </div>
           </div>
@@ -74,6 +82,32 @@
       </div>
     </main>
 
+    <!-- Footer -->
+    <footer>
+      <div class="container-fluid padding">
+      <div class="row text-center">
+          <div class="col-md-6">
+              <hr class="light">
+              <p>Contact Us</p>
+              <hr class="light">
+              <p>04 123 123 12</p>
+              <p>example@exampleemail.com</p>
+              <p>example address</p>
+              <p>Melbourne, Australia, 0000</p>
+          </div>
+          <div class="col-md-6">
+              <hr class="light">
+              <p>Staff Hours</p>
+              <hr class="light">
+              <p>Monday - Friday: 0900 - 1700</p>
+              <p>Saturday: 1100 - 1600</p>
+              <p>Sunday: Unavailable</p>
+              <p></p>
+          </div>
+      </div>
+      </div>
+  </footer>
+    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

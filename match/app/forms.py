@@ -18,9 +18,9 @@ class RegistrationForm(FlaskForm):
     
     age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
      
-    gender = SelectField('gender',choices=[('M','Male'),('F','Female')])
+    gender = SelectField('gender', choices=[('M','Male'),('F','Female')])
    
-    education = SelectField('Education',choices=[('hs','highschool'),('td','tertiary degree'),('mp','master/phd')])
+    education = SelectField('Education', choices=[('highschool','highschool'),('tertiary','tertiary degree'),('master','master/phd')])
 
     submit = SubmitField('Sign Up')
     
@@ -64,20 +64,48 @@ class UpdateAccountForm(FlaskForm):
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
 
+
 class deleteUserForm(FlaskForm):
       username = StringField('enter username for delete')
       submit = SubmitField('Delete')
 
+class UpdateAccountForm(FlaskForm):
+    username = StringField('Username',
+                           validators=[DataRequired(), length(min=2, max=20)])
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    
+    age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
+    
+    state = SelectField('State', choices=[('Vic','victoria'),('Nsw','new south wales'),('Wa','western Australia'),('QSL','queensland'),('Sa','south australia'),('Tas','Tasmina')])
+    
+    personality = SelectField('Personality', choices=[('neutral','neutral'),('extroverted','extroverted'),('introverted','introverted')])
+   
+    education = SelectField('Education', choices=[('highschool','highschool'),('tertiary','tertiary degree'),('master','master/phd')])
+
+    submit = SubmitField('Update')
+
+    def validate_username(self, username):
+        if username.data != current_user.username:
+            user = User.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError('That username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            user = User.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError('That email is taken. Please choose a different one.')
 
 
 class PreferencesForm(FlaskForm):
-    prefstate = SelectField('state preference', choices=[('same','same state'), ('all', 'any state')])
+    prefstate = SelectField('state preference', choices=[('same state','same state'), ('any', 'any state')])
     
-    prefage = SelectField('Age preference', choices=[('Be','older'),('El','younger'),('all','any')] )
+    prefage = SelectField('Age preference', choices=[('older','older'),('younger','younger'),('any','any')] )
     
-    prefpersonality = SelectField('Personality preference', choices=[('ne','neutral'),('ex','extroverted'),('in','introverted')])
+    prefpersonality = SelectField('Personality preference', choices=[('neutral','neutral'),('extroverted','extroverted'),('introverted','introverted')])
    
-    prefeducation = SelectField('Education preference', choices=[('hs','highschool'),('td','tertiary degree'),('mp','master/phd')])
+    prefeducation = SelectField('Education preference', choices=[('any','any'),('tertiary degree','tertiary degree'),('master/phd','master/phd')])
     
     submit = SubmitField('Update Preferences')
     

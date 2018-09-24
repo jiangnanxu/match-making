@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang = "en">
+{% extends "layout.html" %}
+{% block content %}
+
    <head></head>
    <body>
       
@@ -11,8 +12,10 @@
       {%- for message in get_flashed_messages() %}
          {{ message }}
       {%- endfor %}
+	  
 		
-      <button type="button" onclick = "{{ url_for('main') }}">match</button>
+      <h3><a href = "{{ url_for('account') }}" class="btn btn-outline-info">Return
+         </a></h3>
       
       <table>
          <thead>
@@ -35,4 +38,5 @@
       </table>
       
    </body>
-</html>
+
+{% endblock content %}
