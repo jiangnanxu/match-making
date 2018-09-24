@@ -10,6 +10,10 @@ h1, h2, h3 {
     font-family: Apple Chancery, cursive;
 }
 
+h1 {
+    color: white;
+}
+
 table {
     margin-left: 20px;
 }
