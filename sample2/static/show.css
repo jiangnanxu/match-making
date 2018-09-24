@@ -6,7 +6,7 @@ body {
     background-size: cover;
 }
 
-h1 {
+h1, h2, h3 {
     font-family: Apple Chancery, cursive;
 }
 
@@ -14,8 +14,7 @@ table {
     margin-left: 20px;
 }
 tr {
-    position: relative;
-    color: white;
+    color: black;
     margin: 10px;
 }
 
@@ -27,8 +26,4 @@ tr {
     width: 75%;
     margin: 0 auto;
     padding-top: 2rem;
-}
-
-.match {
-    width: 75%
 }
