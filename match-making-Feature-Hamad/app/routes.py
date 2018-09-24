@@ -162,4 +162,3 @@ def preferences():
         return redirect(url_for('login'))
     return render_template('preferences.html', title='preferences', form=form)
     
-      
