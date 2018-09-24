@@ -1,39 +1,68 @@
 <!DOCTYPE html>
 <html lang = "en">
-   <head></head>
+   <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Complete Bootstrap 4 Website Layout</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='show.css') }}">
+   </head>
    <body>
-      
-      <h3>
-         <p>IT's a example</p>
-      </h3>
+        <br><br><br>
+      <h1>
+         <p class="text-center">IT'S A MATCH ~ !</p>
+      </h1>
       
       <hr/>
+      <br>
       {%- for message in get_flashed_messages() %}
          {{ message }}
       {%- endfor %}
-		
-      <h3>match (<a href = "{{ url_for('main') }}">Matching
-         </a>)</h3>
       
-      <table>
-         <thead>
-            <tr>
-               <th>Name</th>
-               <th>Scores</th>
-               <th>UID</th>
-            </tr>
-         </thead>
-         
-         <tbody>
-            {% for result in results %}
-               <tr>
-                  <td>{{ result.name }}</td>
-                  <td>{{ result.score }}</td>
-                  <td>{{ result.uid }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
-      
+    <div class="match container-fluid padding bg-light rounded text-center w-50 p-3">
+        <div class="row padding">
+            <div class="col-lg-6">
+                <br>
+                <h2>Congratulations...</h2><br>
+                <p>According to our own unique algorithm, we have found you suitable matches!
+                    The table here indicates to us the four people in our database is most suitable
+                    to your preferences. After reviewing them, click one to begin the second part of
+                    our Match Making service!
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <h3>YOU HAVE BEEN MATCHED WITH...</h3><br>
+            <table class="container-fluid padding">
+                <thead>
+                    <tr class="table-danger">
+                    <th scope="col">Name</th>
+                    <th scope="col">Scores</th>
+                    <th scope="col">UID</th>
+                    </tr>
+                </thead>
+                
+                <div class="col-12">
+                    <tbody class="table table-bordered">
+                        {% for result in results %}
+
+                        <tr>
+                            <td>{{ result.name }}</td>
+                            <td>{{ result.score }}</td>
+                            <td>{{ result.uid }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+            </table>
+            </div>
+         </div>
+    </div>
+    <br><br>
+   <div class="text-center">
+    <button type="button" class= "btn btn-primary" onclick = "{{ url_for('main') }}">Return</button>
+   </div>
    </body>
 </html>
