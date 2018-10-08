@@ -1,5 +1,4 @@
 import os
-import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, session
 from app import app, db, bcrypt
@@ -7,22 +6,6 @@ from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, deleteUser
 from app.models import User, Post, Preferences, results
 from sqlalchemy.orm import sessionmaker
 from flask_login import login_user, current_user, logout_user, login_required
-
-
-posts1 = [
-    {
-        'author': 'master yi',
-        'title': 'match making 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'akali',
-        'title': 'match making 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
 
 
 @app.route("/")
@@ -34,13 +17,9 @@ def home():
    
 @app.route("/display")
 def display():
-    prefs=Preferences.query.filter_by(username=current_user.username)
-
-    return render_template('display.html',title='display', prefs=prefs)
-@app.route('/display2')
-def display2():
-       res = results.query.all()
-       return render_template('result.html', title='result', res=res)
+	prefs=Preferences.query.filter_by(username=current_user.username)
+	users=User.query.filter_by(username=current_user.username)
+	return render_template('display.html',title='display', prefs=prefs, users=users)
 
 @app.route("/about")
 def about():
@@ -73,7 +52,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         
-        if user.email=='admin@gmail.com':
+        if user.email=='admin':
            if user and bcrypt.check_password_hash(user.password, form.password.data):
               login_user(user, remember=form.remember.data)
               next_page = request.args.get('next')
@@ -81,7 +60,7 @@ def login():
         elif  user and bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user, remember=form.remember.data)
                 next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('account'))
+                return redirect(next_page) if next_page else redirect(url_for('display'))
 
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
