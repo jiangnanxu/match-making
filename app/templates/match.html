@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "layout.html" %}
 {% block content %}
 
@@ -39,4 +40,47 @@
       
    </body>
 
+=======
+{% extends "layout.html" %}
+{% block content %}
+
+   <head></head>
+   <body>
+      
+      <h3>
+         <p>IT's a example</p>
+      </h3>
+      
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+	  
+		
+      <h3>match (<a href = "{{ url_for('match') }}">Matching
+         </a>)</h3>
+      
+      <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>Scores</th>
+               <th>UID</th>
+            </tr>
+         </thead>
+         
+         <tbody>
+            {% for res in res %}
+               <tr>
+                  <td>{{ res.name }}</td>
+                  <td>{{ res.score }}</td>
+                  <td>{{ res.uid }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      
+   </body>
+
+>>>>>>> a4acdf72f7c4950adb85e343cbc0cbfc8c5ad882
 {% endblock content %}

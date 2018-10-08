@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "layout.html" %}
 {% block content %}
 
@@ -22,4 +23,30 @@
       </table>
   
 
+=======
+{% extends "layout.html" %}
+{% block content %}
+
+
+        <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>Scores</th>
+               <th>UID</th>
+            </tr>
+         </thead>
+		< <tbody>
+            {% for res in res %}
+               <tr>
+                  <td>{{ res.name }}</td>
+                  <td>{{ res.score }}</td>
+                  <td>{{ res.uid }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+  
+
+>>>>>>> a4acdf72f7c4950adb85e343cbc0cbfc8c5ad882
 {% endblock content %}
