@@ -9,30 +9,30 @@
                 
                 <div class="form-group">
                 
-			    {{form.prefage.label}}<br>
-                {{form.prefage}}
+			    {{form.prefage.label(class="form-control-label")}}
+                {{form.prefage(class="form-control form-control-lg")}}
              </div>
 
           
             
             
                  <div class="form-group">
-			    {{form.prefstate.label}}<br>
-                {{form.prefstate}}
+			    {{form.prefstate.label(class="form-control-label")}}<br>
+                {{form.prefstate(class="form-control form-control-lg")}}
              </div>
             
 
             <div class="form-group">
                  
-			    {{form.prefpersonality.label}}<br>
-                {{form.prefpersonality}}
+			    {{form.prefpersonality.label(class="form-control-label")}}<br>
+                {{form.prefpersonality(class="form-control form-control-lg")}}
              
             </div>
 
             
             <div class="form-group">
-                {{form.prefeducation.label}}
-                {{form.prefeducation}}
+                {{form.prefeducation.label(class="form-control-label")}}
+                {{form.prefeducation(class="form-control form-control-lg")}}
             </div>
                
             </fieldset>
