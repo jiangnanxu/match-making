@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% for users in users %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+			<p>Username </p>
+            <a class="text-muted">{{ users.username }}</a>
+			<p>Email </p>
+            <small class="text-muted">{{ users.email }}</small>
+			<p>State </p>
+            <p class="mr-2" href="#">{{ users.state }}</p>
+            <p>Age</p>
+            <small class="text-muted">{{ users.age }}</small>
+			<p>Gender</p>
+			<small class="text-muted">{{ users.gender }}</small>
+			<p>Personality</p>
+			<small class="text-muted">{{ users.personality }}</small>
+			<p>Education</p>
+			<small class="text-muted">{{ users.education }}</small>
+           
+          </div>
+        </article>
+    {% endfor %}
+
+ {% for prefs in prefs %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+			<p> username :</p>
+			<small class="text-muted">{{prefs.username}}</small>
+			<p>prefer age </p>
+            <a class="mr-2" href="#">{{ prefs.prefage }}</a>
+			<p> prefer state </p>
+            <small class="text-muted">{{ prefs.prefstate }}</small>
+            <p>prefer personality </p>
+            <p class="article-content">{{ prefs.prefpersonality }}</p>
+            <p> prefer education</p>
+            <small class="text-muted">{{prefs.prefeducation }}</small>
+			</div>
+          </div>
+        </article>
+    
+	{% endfor %}
+<h3>match <a href = "{{ url_for('match') }}" class="btn btn-outline-info">Matching
+         </a></h3>
+{% endblock content %}

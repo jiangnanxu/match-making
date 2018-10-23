@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: url(love.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+h1, h2, h3 {
+    font-family: Apple Chancery, cursive;
+}
+
+h1 {
+    color: white;
+}
+
+table {
+    margin-left: 20px;
+}
+tr {
+    color: black;
+    margin: 10px;
+}
+
+.padding {
+    padding-bottom: 2rem;
+}
+
+.table {
+    width: 75%;
+    margin: 0 auto;
+    padding-top: 2rem;
+}

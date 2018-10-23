@@ -1,0 +1,25 @@
+{% extends "layout2.html" %}
+{% block content %}
+
+
+        <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>Scores</th>
+               <th>UID</th>
+            </tr>
+         </thead>
+		< <tbody>
+            {% for res in res %}
+               <tr>
+                  <td>{{ res.name }}</td>
+                  <td>{{ res.score }}</td>
+                  <td>{{ res.uid }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+  
+
+{% endblock content %}
