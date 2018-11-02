@@ -228,7 +228,7 @@ def match():
 			db.session.commit()
 		else:
 			return "Object not found"
-	return render_template('match.html',title='match', results=results.query.all())
+	return render_template('result.html',title='match', results=results.query.all())
 	
 	
 	     
