@@ -3,7 +3,9 @@
 
 {% for users in users %}
         <article class="media content-section">
-          <div class="media-body">
+		<div class="media">
+			<img class="rounded-circle account-img" src="{{ image_file }}">
+			<div class="media-body">
             <div class="article-metadata">
 			<p>Username </p>
             <a class="text-muted">{{ users.username }}</a>

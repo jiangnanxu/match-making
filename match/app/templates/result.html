@@ -11,11 +11,11 @@
             </tr>
          </thead>
 		< <tbody>
-            {% for res in res %}
+            {% for user in results %}
                <tr>
-                  <td>{{ res.name }}</td>
-                  <td>{{ res.score }}</td>
-                  <td>{{ res.uid }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.score }}</td>
+                  <td>{{ user.uid }}</td>
                </tr>
             {% endfor %}
          </tbody>

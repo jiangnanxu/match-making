@@ -1,4 +1,5 @@
 import os
+import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, session
 from app import app, db, bcrypt
@@ -12,14 +13,14 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/home")
 def home():
     
-    
     return render_template('homepage.html',title='home')
    
 @app.route("/display")
 def display():
+	image_file = url_for('static',filename='profile_pics/' + current_user.image_file)
 	prefs=Preferences.query.filter_by(username=current_user.username)
 	users=User.query.filter_by(username=current_user.username)
-	return render_template('display.html',title='display', prefs=prefs, users=users)
+	return render_template('display.html',title='display', image_file=image_file, prefs=prefs, users=users)
 
 @app.route("/about")
 def about():
@@ -46,34 +47,29 @@ def register():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('account'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        
-        if user.email=='admin':
-           if user and bcrypt.check_password_hash(user.password, form.password.data):
-              login_user(user, remember=form.remember.data)
-              next_page = request.args.get('next')
-              return redirect(next_page) if next_page else redirect(url_for('admin'))
-        elif  user and bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user, remember=form.remember.data)
-                next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('display'))
-
-        else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+	if current_user.is_authenticated:
+		return redirect(url_for('account'))
+	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		if form.email.data=='admin@gmail.com':
+			if bcrypt.check_password_hash(admin, form.password.data):
+				login_user(user, remember=form.remember.data)
+				next_page = request.args.get('next')
+				return redirect(next_page) if next_page else redirect(url_for('admin'))
+		elif user and bcrypt.check_password_hash(user.password, form.password.data):
+			login_user(user, remember=form.remember.data)
+			next_page = request.args.get('next')
+			return redirect(next_page) if next_page else redirect(url_for('display'))
+		else:
+			flash('Login Unsuccessful. Please check email and password', 'danger')
+	return render_template('login.html', title='Login', form=form)
 
 
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
-
-
 
 
 
@@ -93,30 +89,43 @@ def admin():
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
-def account():
+def account(): 
+	form = UpdateAccountForm()
+	image_file = url_for('static',filename='profile_pics/' + current_user.image_file)
+	if form.validate_on_submit():	
+		picture_file = save_picture(form.picture.data)
+		current_user.image_file = picture_file
+		current_user.username = form.username.data
+		current_user.email = form.email.data
+		current_user.age = form.age.data
+		current_user.state = form.state.data
+		current_user.personality = form.personality.data
+		current_user.education = form.education.data
+		db.session.commit()
+		flash('Your account has been updated!', 'success')
+		return redirect(url_for('account'))
+	elif request.method == 'GET':
+		form.username.data = current_user.username
+		form.email.data = current_user.email
+		form.age.data = current_user.age
+		form.state.data = current_user.state
+		form.personality.data = current_user.personality
+		form.education.data = current_user.education
+	
+	return render_template('account.html', title='Account', image_file=image_file, form=form)
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
     
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        current_user.age = form.age.data
-        current_user.state = form.state.data
-        current_user.personality = form.personality.data
-        current_user.education = form.education.data
-        db.session.commit()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('account'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-        form.age.data = current_user.age
-        form.state.data = current_user.state
-        form.personality.data = current_user.personality
-        form.education.data = current_user.education
-        
-    image_file = url_for('static',filename='profile_pics/' + current_user.image_file)
-    
-    return render_template('account.html', title='Account', image_file=image_file, form=form)
+    output_size = (150, 150)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn 
 
 @app.route("/preferences", methods=['GET', 'POST'])
 @login_required
@@ -124,7 +133,7 @@ def preferences():
     form = PreferencesForm()
     if form.validate_on_submit():
 		
-        preferences = Preferences(prefage=form.prefage.data, prefstate=form.prefstate.data, prefpersonality=form.prefpersonality.data,        prefeducation=form.prefeducation.data, username=current_user.username)
+        preferences = Preferences(prefage=form.prefage.data, prefstate=form.prefstate.data, prefpersonality=form.prefpersonality.data, prefeducation=form.prefeducation.data, username=current_user.username)
         Preferences.query.filter_by(username=current_user.username).delete()
         db.session.add(preferences)
         db.session.commit()
@@ -228,7 +237,7 @@ def match():
 			db.session.commit()
 		else:
 			return "Object not found"
-	return render_template('match.html',title='match', results=results.query.all())
+	return render_template('result.html',title='match', results=results.query.all())
 	
 	
 	     
