@@ -1,52 +1,41 @@
-<<<<<<< HEAD
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 {% block content %}
 
 
-        <table>
-         <thead>
-            <tr>
-               <th>Name</th>
-               <th>Scores</th>
-               <th>UID</th>
-            </tr>
-         </thead>
-		< <tbody>
-            {% for res in res %}
-               <tr>
-                  <td>{{ res.name }}</td>
-                  <td>{{ res.score }}</td>
-                  <td>{{ res.uid }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
+      
+            {% for user in results.items %}
+	
+          <article class="media content-section">
+					
+          <div class="media-body">
+            <div class="article-metadata">
+			 <p>user name: {{ user.name }} </p>
+              
+			 <p>match score: {{ user.score }}</p> 	
+              
+            </div>
+			<p> userid :{{ user.uid }} </p>
+			<p>----------------------------</p>
+           
+            
+          </div>
+        </article>
+
+        {% endfor %}
+			{% for page_num in results.iter_pages(left_edge=4, right_edge=4, left_current=4, right_current=4)%}
+	        {% if page_num %}
+	        {% if results.page==page_num %}
+             <a class ="btn btn-info mb-4" href="{{url_for('match',page=page_num)}}">{{page_num}}</a>
+		
+	        {% else %}
+	         <a class ="btn btn-outline-info mb-4" href="{{url_for('match',page=page_num)}}">{{page_num}}</a>
+	    {% endif %}
+	  {% else %}
+	  
+	 {% endif %} 
+    {% endfor %}
+
+       
   
 
-=======
-{% extends "layout.html" %}
-{% block content %}
-
-
-        <table>
-         <thead>
-            <tr>
-               <th>Name</th>
-               <th>Scores</th>
-               <th>UID</th>
-            </tr>
-         </thead>
-		< <tbody>
-            {% for res in res %}
-               <tr>
-                  <td>{{ res.name }}</td>
-                  <td>{{ res.score }}</td>
-                  <td>{{ res.uid }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
-  
-
->>>>>>> a4acdf72f7c4950adb85e343cbc0cbfc8c5ad882
 {% endblock content %}

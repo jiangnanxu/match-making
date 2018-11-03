@@ -32,22 +32,23 @@ def inputdata():
 	age=random.randrange(18,55)
 	gender=random.choice(fm)
 	education=random.choice(edlist)
-	image_file="default.jpg"
-        prefage=random.choice(agepr)
-	prefstate=random.choice(stc)
-	prefpersonality=random.choice(pepre)
-	prefeducation=random.choice(edpre)
+	image_file="default"
 			
 	c.execute("INSERT INTO User(username, email, image_file, password, state, age, gender, education) VALUES(?,?,?,?,?,?,?,?)",
 	(username,email, image_file, password, state, age, gender, education))
-        c.execute("INSERT INTO Preferences(prefage, prefstate, prefeducation, prefpersonality, username) VALUES(?,?,?,?,?)",
-	(prefage,prefstate,prefeducation,prefpersonality,username))
 	conn.commit()
 	
+	prefage=random.choice(agepr)
+	prefstate=random.choice(stc)
+	prefpersonality=random.choice(pepre)
+	prefeducation=random.choice(edpre)
+	username=username
+		
+	c.execute("INSERT INTO Preferences(prefage, prefstate, prefeducation, prefpersonality, username) VALUES(?,?,?,?,?)",
+	(prefage,prefstate,prefeducation,prefpersonality,username))
+	conn.commit()
 
-	
 for i in range(100):
 	inputdata()
-	
 c.close()
 conn.close()
