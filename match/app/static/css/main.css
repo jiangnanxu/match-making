@@ -79,7 +79,7 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-.footer {
+footer {
   background-color: #3f3f3f;
   color: #d5d5d5;
   position: absolute;
@@ -93,4 +93,11 @@ hr.light {
   border-top: 1px solid #d5d5d5;
   width:90%;
 }
+
+.footer-content {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1000px;
+}
+
 
