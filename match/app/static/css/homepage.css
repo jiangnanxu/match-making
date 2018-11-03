@@ -10,6 +10,10 @@ html, body {
     height: 100%;
 }
 
+.carousel-item {
+    max-height: 1000px;
+}
+
 .carousel-caption {
     position: absolute;
     top: 50%;
@@ -80,6 +84,7 @@ footer {
     background-color: #3f3f3f;
     color: #d5d5d5;
     padding-top: 2rem;
+    max-width: 2500px:
 }
 hr.light {
     border-top: 1px solid #d5d5d5;
@@ -94,4 +99,16 @@ hr.light {
 .padding {
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1600px;
+}
+
+.match-making-fundamentals {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1600px;
 }
