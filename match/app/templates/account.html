@@ -1,6 +1,8 @@
 {% extends "layout2.html" %}
 {% block content %}
+    <div id="footer-at-bottom-container">
     <div class="content-section">
+
       <div class="media">
         <img class="rounded-circle account-img" src="{{ image_file }}">
         <div class="media-body">
@@ -8,6 +10,7 @@
           <p class="text-secondary">{{ current_user.email }}</p>
         </div>
       </div>
+
         <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
@@ -81,5 +84,6 @@
             
         </form>
     </div>
+    </div>  
 	
 {% endblock content %}
