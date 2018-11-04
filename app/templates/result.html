@@ -9,21 +9,21 @@
 			<img class="rounded-circle article-image" src="{{url_for('static', filename='profile_pics/'+user.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
-			<p style="text-shadow: 3px 2px red";> userid :{{ user.uid }} </p>
+			<p> User ID :	{{ user.uid }} </p>
 			
-			<p style="text-shadow: 3px 2px red";>user name: {{ user.name }} </p>
+			<p>	User Name:	{{ user.name }} </p>
               
-			<p style="text-shadow: 3px 2px red";>match score: {{ user.score }}</p> 	
+			<p> Match Score: {{ user.score }}</p> 	
 			
-			<p style="text-shadow: 3px 2px red";> user state :{{ user.state }} </p>
+			<p> User State :	{{ user.state }} </p>
 			
-			<p style="text-shadow: 3px 2px red";> education level :{{ user.education }} </p>
+			<p> Education :	{{ user.education }} </p>
 			
-			<p> Age :{{ user.age }} </p>
+			<p> Age :	{{ user.age }} </p>
 			
-			<p> Height :{{ user.height }} </p>
+			<p> Height :	{{ user.height }} </p>
 			
-			<p style="text-shadow: 3px 2px red";> personality :{{ user.personality }} </p>
+			<p> Personality :	{{ user.personality }} </p>
            
             </div>
           </div>
