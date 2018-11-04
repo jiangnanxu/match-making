@@ -13,7 +13,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/home")
 def home():
     
-    return render_template('homepage.html',title='home')
+    return render_template('home.html',title='home')
    
 @app.route("/display")
 def display():
@@ -29,6 +29,14 @@ def about():
 @app.route("/profile")
 def profile():
     return render_template('profile.html',title='profile')
+
+@app.route("/record")
+def record():
+    return render_template('record.html',title='our legal record statement')
+
+@app.route("/privacy")
+def privacy():
+    return render_template('privacy.html',title='privacy statement')
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -52,9 +60,7 @@ def login():
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = User.query.filter_by(email=form.email.data).first()
-		if form.email.data=='admin@gmail.com':
-			if bcrypt.check_password_hash(admin, form.password.data):
-				login_user(user, remember=form.remember.data)
+		if form.email.data=='admin@gmail.com' and form.password.data=='admin':
 				next_page = request.args.get('next')
 				return redirect(next_page) if next_page else redirect(url_for('admin'))
 		elif user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -74,9 +80,9 @@ def logout():
 
 
 @app.route("/admin",methods=['GET', 'POST'])
-@login_required
 def admin():
-    posts = User.query.all()
+    page=request.args.get('page',1,type=int)
+    posts = User.query.paginate(page=page, per_page=10)
     form= deleteUserForm()
     if form.validate_on_submit():
        user=User.query.filter_by(username=form.username.data).first()
@@ -237,7 +243,7 @@ def match():
 			db.session.commit()
 		else:
 			return "Object not found"
-	return render_template('result.html',title='match', results=results.query.all())
+	return render_template('result.html',title='match', results=results.query.paginate(page=page, per_page=5))
 	
 	
 	     

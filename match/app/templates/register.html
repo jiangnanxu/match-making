@@ -91,8 +91,6 @@
                 {{form.education.label(class="form-control-label")}}
                 {{form.education(class="form-control form-control-lg")}}
              </div>
-             
-             
             
              <div class="form-group">
                 {{form.submit(class="btn btn-outline-info")}}
@@ -106,5 +104,9 @@
             Already have an Account? <a class="ml-2" href="{{url_for('login')}}"> Sign in </a>
          </small>
      </div>
-   
+	 <div class="border-top pt-3">
+		<small clss="text-muted">
+			*If you press register, it means that you agree our <a class="ml-2" href="{{url_for('privacy')}}">privacy policy</a> and 
+			our <a class="ml-2" href="{{url_for('record')}}">legal record statement 
 {% endblock content %}
+

@@ -15,13 +15,13 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', 
                                      validators=[DataRequired(), EqualTo('password')])
 
-    state = SelectField('state',choices=[('Vic','victoria'),('Nsw','new south wales'),('Wa','western Australia'),('QSL','queensland'),('Sa','south australia'),('Tas','Tasmina')])
+    state = SelectField('state',choices=[('Victoria','Victoria'),('New South Wales','New South Wales'),('Western Astralia','Western Australia'),('Queensland','Queensland'),('South Australia','South Australia'),('Tasmina','Tasmina'),('Astralia Capital Territory','Australia Capital Territory')])
     
     age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
      
-    gender = SelectField('gender', choices=[('M','Male'),('F','Female')])
+    gender = SelectField('gender', choices=[('Male','Male'),('Female','Female')])
    
-    education = SelectField('Education', choices=[('highschool','highschool'),('tertiary','tertiary degree'),('master','master/phd')])
+    education = SelectField('Education', choices=[('Highschool','Highschool'),('Tertiary degree','Tertiary degree'),('Master/phd','Master/phd')])
 
     submit = SubmitField('Sign Up')
     
@@ -55,11 +55,11 @@ class UpdateAccountForm(FlaskForm):
     
     age = IntegerField('Age', validators=[DataRequired(), number_range(min=18, max=99)])
     
-    state = SelectField('State', choices=[('Vic','victoria'),('Nsw','new south wales'),('Wa','western Australia'),('QSL','queensland'),('Sa','south australia'),('Tas','Tasmina')])
+    state = SelectField('state',choices=[('Victoria','Victoria'),('New South Wales','New South Wales'),('Western Astralia','Western Australia'),('Queensland','Queensland'),('South Australia','South Australia'),('Tasmina','Tasmina'),('Astralia Capital Territory','Australia Capital Territory')])
     
-    personality = SelectField('Personality', choices=[('neutral','neutral'),('extroverted','extroverted'),('introverted','introverted')])
+    personality = SelectField('Personality', choices=[('Neutral','Neutral'),('Extroverted','Extroverted'),('Introverted','Introverted')])
    
-    education = SelectField('Education', choices=[('highschool','highschool'),('tertiary','tertiary degree'),('master','master/phd')])
+    education = SelectField('Education', choices=[('Highschool','Highschool'),('Tertiary degree','Tertiary degree'),('Master/phd','Master/phd')])
 
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
 
@@ -67,13 +67,13 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PreferencesForm(FlaskForm):
-    prefstate = SelectField('state preference', choices=[('same state','same state'), ('any', 'any state')])
+    prefstate = SelectField('state preference', choices=[('Same state','Same state'), ('Any state', 'Any state')])
     
-    prefage = SelectField('Age preference', choices=[('older','older'),('younger','younger'),('any','any')] )
+    prefage = SelectField('Age preference', choices=[('Older','Older'),('Younger','Younger'),('Any','Any')] )
     
-    prefpersonality = SelectField('Personality preference', choices=[('neutral','neutral'),('extroverted','extroverted'),('introverted','introverted')])
+    prefpersonality = SelectField('Personality preference', choices=[('Neutral','Neutral'),('Extroverted','Extroverted'),('Introverted','Introverted')])
    
-    prefeducation = SelectField('Education preference', choices=[('any','any'),('tertiary degree','tertiary degree'),('master/phd','master/phd')])
+    prefeducation = SelectField('Education preference', choices=[('Any','Any'),('Tertiary degree','Tertiary degree'),('Master/phd','Master/phd')])
     
     submit = SubmitField('Update Preferences')
     

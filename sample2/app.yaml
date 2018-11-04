@@ -1,3 +1,3 @@
-entrypoint: python test.py
+entrypoint: "gunicorn -b :$PORT app:app"
 env: flex
 runtime: python

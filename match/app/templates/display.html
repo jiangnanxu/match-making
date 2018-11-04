@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<h3>match <a href = "{{ url_for('match') }}" class="btn btn-outline-info">Matching
+         </a></h3>
 {% for users in users %}
         <article class="media content-section">
 		<div class="media">
@@ -45,6 +46,5 @@
         </article>
     
 	{% endfor %}
-<h3>match <a href = "{{ url_for('match') }}" class="btn btn-outline-info">Matching
-         </a></h3>
+
 {% endblock content %}

@@ -32,7 +32,7 @@ def inputdata():
 	age=random.randrange(18,55)
 	gender=random.choice(fm)
 	education=random.choice(edlist)
-	image_file="default"
+	image_file="default.jpg"
 			
 	c.execute("INSERT INTO User(username, email, image_file, password, state, age, gender, education) VALUES(?,?,?,?,?,?,?,?)",
 	(username,email, image_file, password, state, age, gender, education))

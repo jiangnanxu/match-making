@@ -14,8 +14,9 @@
                 {{form.submit(class="btn btn-outline-info")}}
              </div>
     </form>
-	 {% for post in posts %}
+	 {% for post in posts.items %}
         <article class="media content-section">
+		 <img class="rounded-circle article-image" src="{{url_for('static', filename='profile_pics/'+post.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ post.username }}</a>
@@ -29,6 +30,19 @@
           </div>
         </article>
     {% endfor %}
+	{% for page_num in posts.iter_pages(left_edge=4, right_edge=4, left_current=4, right_current=4)%}
+	 {% if page_num %}
+	   {% if posts.page==page_num %}
+        <a class ="btn btn-info mb-4" href="{{url_for('admin',page=page_num)}}">{{page_num}}</a>
+		
+	   {% else %}
+	    <a class ="btn btn-outline-info mb-4" href="{{url_for('admin',page=page_num)}}">{{page_num}}</a>
+	    {% endif %}
+	  {% else %}
+	  
+	 {% endif %} 
+    {% endfor %}
+
 
 
 
