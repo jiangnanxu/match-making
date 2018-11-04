@@ -5,20 +5,20 @@ from sqlalchemy.orm import sessionmaker
 from table import *
 engine = create_engine('sqlite:///data.db', echo=True)
 
-application = Flask(__name__)
+app = Flask(__name__)
 
-@application.route('/display')
+@app.route('/display')
 def display():
 	Session = sessionmaker(bind=engine)
 	s = Session()
 	results = s.query(Result).all()
 	return render_template('show.html', results = results)
 
-@application.route('/')
+@app.route('/')
 def main():
 	return render_template('new.html')
 
-@application.route('/input', methods=['GET', 'POST'])
+@app.route('/input', methods=['GET', 'POST'])
 def importuser():
 	POST_NAME = request.form['username']
 	
@@ -91,4 +91,4 @@ def importuser():
 			
 
 if __name__ == "__main__":
-	application.run(debug=True)
+	app.run(debug=True)

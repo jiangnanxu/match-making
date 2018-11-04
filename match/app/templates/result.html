@@ -6,18 +6,26 @@
             {% for user in results.items %}
 	
           <article class="media content-section">
-					
+			<img class="rounded-circle article-image" src="{{url_for('static', filename='profile_pics/'+user.image_file) }}">
           <div class="media-body">
             <div class="article-metadata">
+			<p> userid :{{ user.uid }} </p>
+			
 			 <p>user name: {{ user.name }} </p>
               
 			 <p>match score: {{ user.score }}</p> 	
-              
-            </div>
-			<p> userid :{{ user.uid }} </p>
-			<p>----------------------------</p>
+			
+			<p> user state :{{ user.state }} </p>
+			
+			<p> education level :{{ user.education }} </p>
+			
+			<p> Age :{{ user.age }} </p>
+			
+			<p> Height :{{ user.height }} </p>
+			
+			<p> personality :{{ user.personality }} </p>
            
-            
+            </div>
           </div>
         </article>
 
