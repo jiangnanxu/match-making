@@ -1,12 +1,18 @@
 html, body {
   background: #fafafa;
-  background-image: url(g3.jpg);
   background-position: center;
  
   background-size: cover;
   color: #333333;
   
   height: 100%;
+}
+
+body {
+  background-image: url(g3.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -113,7 +119,5 @@ hr.light {
 
 #footer-at-bottom-container {
   min-height: 100%;
-}
-
-    display: block;
+  display: block;
 }
