@@ -1,5 +1,15 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 {% block content %}
+	<div class="col-sm-4">
+		<div class="content-section">
+            <h6>Personal setting</h6>
+              <ul class="list-group">
+                <a class="list-group-item list-group-item-light" href="{{ url_for('account') }}">update profile</a>
+				<a class="list-group-item list-group-item-light" href="{{ url_for('preferences')}}">update preferences </a>
+              </ul>
+         </div>
+	</div>
+	<div class="col-sm-8">
     <div class="content-section">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ image_file }}">
@@ -7,7 +17,7 @@
           <h2 class="account-heading">{{ current_user.username }}</h2>
           <p class="text-secondary">{{ current_user.email }}</p>
         </div>
-      </div>
+		</div>
         <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
@@ -65,12 +75,23 @@
                 {{form.personality.label(class="form-control-label")}}
                 {{form.personality(class="form-control form-control-lg")}}
             </div>
-
-            
             <div class="form-group">
                 {{form.education.label(class="form-control-label")}}
                 {{form.education(class="form-control form-control-lg")}}
             </div>
+			<div class="form-group">
+                {{form.height.label(class="form-control-label")}}
+				{% if form.height.errors %}
+                {{ form.height(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.height.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.height(class="form-control form-control-lg")}}
+                {% endif %}
+			</div>
             
 			<div class="form-group">
                 {{ form.picture.label() }}
@@ -82,14 +103,11 @@
                     {% endfor %}
                 {% endif %}
             </div>
-               
             </fieldset>
-            
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
-            </div>
-            
+            </div>  
         </form>
-    </div>
-	
+	</div>
+	</div>
 {% endblock content %}

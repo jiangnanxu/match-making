@@ -1,12 +1,21 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 {% block content %}
-    <div class="content-section">
+	<div class="col-sm-4">
+		<div class="content-section">
+            <h6>Personal setting</h6>
+              <ul class="list-group">
+                <a class="list-group-item list-group-item-light" href="{{ url_for('account') }}">update profile</a>
+				<a class="list-group-item list-group-item-light" href="{{ url_for('preferences')}}">update preferences </a>
+              </ul>
+         </div>
+	</div>
+	<div class="col-sm-8">
+	<div class="content-section">
       
         <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">User Preferences</legend>
-                
                 <div class="form-group">
                 
 			    {{form.prefage.label(class="form-control-label")}}
@@ -15,19 +24,23 @@
 
           
             
-            
                  <div class="form-group">
 			    {{form.prefstate.label(class="form-control-label")}}<br>
                 {{form.prefstate(class="form-control form-control-lg")}}
              </div>
             
-
+			
             <div class="form-group">
                  
 			    {{form.prefpersonality.label(class="form-control-label")}}<br>
                 {{form.prefpersonality(class="form-control form-control-lg")}}
              
             </div>
+			
+			<div class="form-group">
+			    {{form.perfheight.label(class="form-control-label")}}<br>
+                {{form.perfheight(class="form-control form-control-lg")}}
+             </div>
 
             
             <div class="form-group">
@@ -42,4 +55,5 @@
             </div>
         </form>
     </div>
+	</div>
 {% endblock content %}
